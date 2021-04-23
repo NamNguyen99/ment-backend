@@ -36,7 +36,11 @@ module.exports = (sequelize, DataTypes) => {
     joinArmy: DataTypes.DATE,
     unit: DataTypes.INTEGER,
     rank: DataTypes.STRING,
-    position: DataTypes.STRING
+    position: DataTypes.STRING,
+    nameWithoutTone: DataTypes.STRING,
+    gender: DataTypes.INTEGER,
+    militaryCode: DataTypes.STRING,
+    isBlock: DataTypes.INTEGER
   }, {
     sequelize,
     charset: 'utf8',

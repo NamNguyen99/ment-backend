@@ -1,115 +1,91 @@
-const db = require("../../database/models");
-const userSerializer = require("../../serializers/user.serializer")
+const userServices = require('../../services/admin/user.service');
 
-const User = db.User;
-const Op = db.Sequelize.Op;
+const resultUtil = require('../../servicehelper/service.result');
 
 const userController = {
   create: async (req, res) => {
-    const user = req.body;
+    const serviceResult = resultUtil.new();
+    try {
+      const result = await userServices.createUser(req.body);
+      if (result) {
+        resultUtil.onSuccess(serviceResult, result);
+      } else {
+        resultUtil.onError(serviceResult, result);
+      }
+    } catch (error) {
+      resultUtil.onException(res, serviceResult, error);
 
-    User.create(user)
-      .then(data => {
-        res.json({
-          success: true,
-          data: userSerializer.new(data)
-        });
-      })
-      .catch(err => {
-        res.json({
-          success: false,
-          error: err.message || "Some error occurred while creating the User."
-        });
-      });
+    } finally {
+      res.json(serviceResult);
+    }
   },
 
   findAll: async (req, res) => {
-    const title = req.query.title;
-    var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+    const serviceResult = resultUtil.new();
+    try {
+      const result = await userServices.findByConditionUser(req.query);
+      if (result) {
+        resultUtil.onSuccess(serviceResult, result);
+      } else {
+        resultUtil.onError(serviceResult, result);
+      }
+    } catch (error) {
+      resultUtil.onException(res, serviceResult, error);
 
-    User.findAll({ where: condition })
-      .then(data => {
-        res.json({
-          success: true,
-          data: data.map(item => userSerializer.new(item))
-        });
-      })
-      .catch(err => {
-        res.json({
-          success: false,
-          error: err.message || "Some error occurred while retrieving users."
-        });
-      });
+    } finally {
+      res.json(serviceResult);
+    }
   },
 
   findOne: async (req, res) => {
-    const id = req.params.id;
+    const serviceResult = resultUtil.new();
+    try {
+      const result = await userServices.findOneUser(req.params.id);
+      resultUtil.onSuccess(serviceResult, result);
 
-    User.findByPk(id)
-      .then(data => {
-        res.json({
-          success: true,
-          data: userSerializer.new(data)
-        });
-      })
-      .catch(err => {
-        res.status(404).json({
-          success: false,
-          error: err.message || "Error retrieving User with id=" + id
-        });
-      });
+    } catch (error) {
+      resultUtil.onException(res, serviceResult, error);
+
+    } finally {
+      res.json(serviceResult);
+    }
   },
 
   update: async (req, res) => {
-    const id = req.params.id;
-    req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8), null)
+    const serviceResult = resultUtil.new();
+    try {
+      const result = await userServices.updateUser(req.body);
+      if (result) {
+        resultUtil.onSuccess(serviceResult, result);
+      } else {
+        resultUtil.onError(serviceResult, result);
 
-    User.update(req.body, {
-      where: { id: id }
-    })
-      .then(num => {
-        if (num == 1) {
-          res.json({
-            success: true
-          });
-        } else {
-          res.json({
-            success: false
-          });
-        }
-      })
-      .catch(err => {
-        res.status(400).json({
-          success: false,
-          error: err.message || "Error updating User with id=" + id
-        });
-      });
+      }
+    } catch (error) {
+      resultUtil.onException(res, serviceResult, error);
+
+    } finally {
+      res.json(serviceResult);
+    }
   },
 
   delete: async (req, res) => {
-    const id = req.params.id;
+    const serviceResult = resultUtil.new();
+    try {
+      const result = await userServices.deleteUser(req.params.id);
+      if (result) {
+        resultUtil.onSuccess(serviceResult, result);
+      } else {
+        resultUtil.onError(serviceResult, result);
 
-    User.destroy({
-      where: { id: id }
-    })
-      .then(num => {
-        if (num == 1) {
-          res.json({
-            success: true
-          });
-        } else {
-          res.json({
-            success: false
-          });
-        }
-      })
-      .catch(err => {
-        res.status(400).json({
-          success: false,
-          error: err.message || "Could not delete User with id=" + id
-        });
-      });
-  }
+      }
+    } catch (error) {
+      resultUtil.onException(res, serviceResult, error);
+
+    } finally {
+      res.json(serviceResult);
+    }
+  },
 }
 
 module.exports = userController;

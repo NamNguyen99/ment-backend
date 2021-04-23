@@ -3,17 +3,17 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     return [
-      queryInterface.addColumn('Users', 'nameWithoutUtf8', {
+      queryInterface.addColumn('Users', 'nameWithoutTone', {
         type: Sequelize.STRING
       }),
       queryInterface.addColumn('Users', 'militaryCode', {
         type: Sequelize.STRING
       }),
-      queryInterface.addColumn('Users', 'sex', {
-        type: Sequelize.TINYINT
+      queryInterface.addColumn('Users', 'gender', {
+        type: Sequelize.INTEGER
       }),
       queryInterface.addColumn('Users', 'isBlock', {
-        type: Sequelize.TINYINT
+        type: Sequelize.INTEGER
       }),
       queryInterface.changeColumn('Users', 'role', {
         type: Sequelize.STRING
@@ -23,9 +23,9 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     return [
-      queryInterface.removeColumn('Users', 'nameWithoutUtf8'),
+      queryInterface.removeColumn('Users', 'nameWithoutTone'),
       queryInterface.removeColumn('Users', 'militaryCode'),
-      queryInterface.removeColumn('Users', 'sex'),
+      queryInterface.removeColumn('Users', 'gender'),
       queryInterface.removeColumn('Users', 'isBlock'),
       queryInterface.changeColumn(
         'Users',

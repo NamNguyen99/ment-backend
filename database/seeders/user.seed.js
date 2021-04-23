@@ -7,12 +7,16 @@ module.exports = {
       'Users',
       [
         {
-          fullName: 'Nguyễn Văn A',  
+          fullName: 'Nguyễn Văn A',
+          nameWithoutTone: 'Nguyen Van A',
           email: 'admin@gmail.com',
           phone: '0123456789',
+          militaryCode: "b2b3",
+          gender: 0,
+          isBlock: 0,
           type: '',
           password: bcrypt.hashSync("123456", bcrypt.genSaltSync(8), null),
-          role: 1,
+          role: 'admin',
           joinArmy: new Date('2020-06-01T00:00:00.000Z'),
           unit: 1,
           rank: "b2",

@@ -1,11 +1,6 @@
-<<<<<<< HEAD
 const db = require('../../database/models');
 const officerTestSerializer = require('../../serializers/officer_test.serializer');
 const commentSerializer = require('../../serializers/comment.serializer');
-=======
-const db = require("../../database/models");
-const officerTestSerializer = require("../../serializers/officer_test.serializer")
->>>>>>> parent of fe84f09... update api user (#40)
 const resultUtil = require('../../servicehelper/service.result');
 const exceptionUtil = require('../../handler_error/exceptionUtil');
 const { defaultPaging } = require('../../helpers/constant');
@@ -74,16 +69,11 @@ const officerTestController = {
     let serviceResult = resultUtil.new();
     try {
       const id = req.params.id;
-<<<<<<< HEAD
       const data = await OfficerTest.findByPk(id);
       const test = await Test.findByPk(data.testVersion);
       const comments = await Comment.findAll({where: { officerId: id }})
       const commentResponses = comments.map((item) => commentSerializer.new(item));
 
-=======
-      const data = await OfficerTest.findByPk(id)
-      const test = await Test.findByPk(data.testVersion)
->>>>>>> parent of fe84f09... update api user (#40)
       if (data) {
         serviceResult.code = 200;
         serviceResult.success = true;

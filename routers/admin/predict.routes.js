@@ -1,6 +1,6 @@
 module.exports = (app) => {
   const officerTests = require('../../controllers/admin/predict.controller');
-  const {authMidleRole} = require('../../middlewares/auth.middleware');
+  const {authAdmin} = require('../../middlewares/auth.middleware');
 
   var router = require('express').Router();
 
@@ -11,5 +11,5 @@ module.exports = (app) => {
   router.delete('/:id', officerTests.deletePredict);
 
 
-  app.use('/api/admin/predicts',authMidleRole, router);
+  app.use('/api/admin/predicts',authAdmin, router);
 };

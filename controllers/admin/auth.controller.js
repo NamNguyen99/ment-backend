@@ -6,6 +6,7 @@ const exceptionUtil = require('../../handler_error/exceptionUtil');
 
 const appSetting = require('../../appconfig/app.config');
 const db = require("../../database/models");
+const userSerializer = require('../../serializers/user.serializer');
 const User = db.User;
 
 const authController = {
@@ -34,6 +35,7 @@ const authController = {
           serviceResult.code = 200;
           serviceResult.success = true;
           serviceResult.token = token;
+          serviceResult.data = userSerializer.new(user);
         }
       }
     } catch (error) {
