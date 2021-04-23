@@ -37,8 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       rank: DataTypes.STRING,
       position: DataTypes.STRING,
       answer: DataTypes.TEXT,
-      doctorPredict: DataTypes.TINYINT,
-      doctorPredictDiagnosis: DataTypes.TINYINT,
+      doctorPredict: DataTypes.INTEGER,
       predictShallowFilter: DataTypes.INTEGER,
       predictDeepFilter: DataTypes.INTEGER,
       testTime: DataTypes.INTEGER,
@@ -48,13 +47,25 @@ module.exports = (sequelize, DataTypes) => {
       otherPeople: DataTypes.TEXT,
       militaryCode: DataTypes.STRING,
       nameWithoutTone: DataTypes.STRING,
-      predict_id: DataTypes.INTEGER,
     },
     {
       sequelize,
       charset: 'utf8',
       modelName: 'OfficerNewTests',
-      validate: {},
+      validate: {
+        requireOptions() {
+          const me = this;
+          if (!me.militaryCode) {
+            throw new Error('militaryCode is require');
+          }
+          if (!me.answer) {
+            throw new Error('answer is require');
+          }
+          if (!me.unit) {
+            throw new Error('unit is require');
+          }
+        },
+      },
     },
   );
   OfficerNewTests.addHook('beforeSave', async (instance, options) => {

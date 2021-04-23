@@ -58,7 +58,6 @@ const authController = {
         token: token,
         id: user.id,
         role: user.role,
-        name: user.fullName,
       },
     });
   },

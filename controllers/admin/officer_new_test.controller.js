@@ -55,6 +55,7 @@ const officerTestController = {
       };
       const {count, rows} = await OfficerNewTests.findAndCountAll(option);
       const data = rows;
+      console.log(rows);
 
       if (data) {
         serviceResult.code = 200;
