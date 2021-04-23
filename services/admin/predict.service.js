@@ -9,7 +9,7 @@ module.exports = {
   },
 
   updatePredict: async (id, predictParam) => {
-    const {officerTestId, predict, nameUser, diagnosis, conflict, userId} = predictParam;
+    const {officerTestId, predict, nameUser, diagnosis, conflict} = predictParam;
     const predictModel = await Predict.findByPk(id);
     if (predictModel) {
       const saveParam = {
@@ -18,7 +18,6 @@ module.exports = {
         ...(diagnosis && {diagnosis: diagnosis}),
         ...(conflict && {conflict: conflict}),
         ...(nameUser && {nameUser: nameUser}),
-        ...(userId && {userId: userId}),
       };
       return await predictModel.update(saveParam);
     }
