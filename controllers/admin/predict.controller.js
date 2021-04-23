@@ -11,9 +11,11 @@ module.exports = {
         resultUtil.onSuccess(serviceResult, result);
       } else {
         resultUtil.onError(serviceResult, result);
+
       }
     } catch (error) {
       resultUtil.onException(res, serviceResult, error);
+
     } finally {
       res.json(serviceResult);
     }
@@ -26,9 +28,11 @@ module.exports = {
         resultUtil.onSuccess(serviceResult, result);
       } else {
         resultUtil.onError(serviceResult, result);
+
       }
     } catch (error) {
       resultUtil.onException(res, serviceResult, error);
+
     } finally {
       res.json(serviceResult);
     }
@@ -41,9 +45,11 @@ module.exports = {
         resultUtil.onSuccess(serviceResult, result);
       } else {
         resultUtil.onError(serviceResult, result);
+
       }
     } catch (error) {
       resultUtil.onException(res, serviceResult, error);
+
     } finally {
       res.json(serviceResult);
     }
@@ -53,8 +59,10 @@ module.exports = {
     try {
       const result = await predictServices.findOnePredict(req.params.id);
       resultUtil.onSuccess(serviceResult, result);
+
     } catch (error) {
       resultUtil.onException(res, serviceResult, error);
+
     } finally {
       res.json(serviceResult);
     }
@@ -67,11 +75,13 @@ module.exports = {
         resultUtil.onSuccess(serviceResult, result);
       } else {
         resultUtil.onError(serviceResult, result);
+
       }
     } catch (error) {
       resultUtil.onException(res, serviceResult, error);
+
     } finally {
       res.json(serviceResult);
     }
-  },
-};
+  }
+}

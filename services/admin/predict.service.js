@@ -1,4 +1,5 @@
-const {Predict} = require('../../database/models');
+const { Predict } = require('../../database/models');
+
 
 module.exports = {
   createPredict: async (predictParam) => {
@@ -15,8 +16,8 @@ module.exports = {
     if (predictParam && predictParam.id) {
       const predictModel = await Predict.findByPk(predictParam.id);
       if (predictModel) {
-        const {officerTestId, predict, conflict} = predictParam;
-        const saveParam = {officerTestId: officerTestId, predict: predict, conflict: conflict};
+        const { officerTestId, predict, conflict } = predictParam;
+        const saveParam = { officerTestId: officerTestId, predict: predict, conflict: conflict };
         result = await predictModel.update(saveParam);
       }
     }
@@ -38,9 +39,9 @@ module.exports = {
     return await Predict.findByPk(id);
   },
 
-  findByConditionPredict: async ({predict}) => {
+  findByConditionPredict: async ({ predict }) => {
     if (predict) {
-      return await Predict.findAll({where: {predict: predict}, order: [['id', 'DESC']]});
+      return await Predict.findAll({ predict: predict });
     }
-  },
-};
+  }
+}
