@@ -74,6 +74,11 @@ Follow these instructions to set up this project on local machine.
   
   test pool v2
   npx sequelize-cli db:seed --seed v2_test_pool.seed.js
+
+  role generate (run sequencely)
+  npx sequelize-cli db:seed --seed role_category.seed.js
+  npx sequelize-cli db:seed --seed role_master_category.seed.js
+  npx sequelize-cli db:seed --seed role_master.seed.js
   ```
 - Run
   ```
