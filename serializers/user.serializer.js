@@ -1,5 +1,7 @@
+const roleMasterSerializer = require("./role_master.serializer");
+
 const userSerializer = {
-  new: (user) => {
+  new: (user, roleMaster) => {
     return ({
       id:           user.id,
       fullName:     user.fullName,
@@ -11,7 +13,8 @@ const userSerializer = {
       joinArmy:     user.joinArmy,
       unit:         user.unit,
       rank:         user.rank,
-      position:     user.position
+      position:     user.position,
+      roleMaster:   roleMaster ? roleMasterSerializer.new(roleMaster) : null
     })
   }
 };

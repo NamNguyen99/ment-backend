@@ -9,6 +9,8 @@ module.exports = app => {
   router.get("/:id", users.findOne);
   router.put("/:id", users.update);
   router.delete("/:id", users.delete);
+  router.post("/create_role", users.createRoleMaster);
+  router.put("/update_role/:id", users.updateRoleMaster);
 
   app.use('/api/admin/users', authMiddleware.authAdmin, router);
 };

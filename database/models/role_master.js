@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   RoleMaster.init({
     name: DataTypes.STRING,
-    roleMasterCategoryId: DataTypes.INTEGER,
+    roleMasterId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
     roleCategoryIds: DataTypes.TEXT,
   }, {
