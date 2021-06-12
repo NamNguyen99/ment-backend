@@ -30,7 +30,7 @@ const testController = {
         serviceResult.success = false;
         serviceResult.error = "Some error occurred while creating the Test Pool.";
       }
-    } catch {
+    } catch(error) {
       exceptionUtil.handlerErrorAPI(res, serviceResult, error);
     } finally {
       res.json(serviceResult);
@@ -57,7 +57,7 @@ const testController = {
         serviceResult.success = false;
         serviceResult.error = "Some error occurred while retrieving test pools.";
       }
-    } catch {
+    } catch(error) {
       exceptionUtil.handlerErrorAPI(res, serviceResult, error);
     } finally {
       res.json(serviceResult);
@@ -82,7 +82,7 @@ const testController = {
         serviceResult.success = false;
         serviceResult.error = "Could not delete Test pool with id=" + id;
       }
-    } catch {
+    } catch(error) {
       exceptionUtil.handlerErrorAPI(res, serviceResult, error);
     } finally {
       res.json(serviceResult);

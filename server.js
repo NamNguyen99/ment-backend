@@ -30,6 +30,7 @@ require('./routers/admin/test.routes')(app);
 require('./routers/admin/officer_test.routes')(app);
 require('./routers/admin/comment.routes')(app);
 require('./routers/admin/predict.routes')(app);
+require('./routers/admin/role.routes')(app);
 
 require('./routers/guest/auth.routes')(app);
 require("./routers/guest/officer_test.routes")(app);

@@ -1,4 +1,4 @@
-const { User, Sequelize } = require('../../database/models');
+const { User, RoleMaster, Sequelize } = require('../../database/models');
 const Op = Sequelize.Op;
 
 const userSerializer = require("../../serializers/user.serializer")
@@ -11,7 +11,8 @@ module.exports = {
       const builder = User.build(userParam);
       saveResult = await builder.save();
     }
-    return userSerializer.new(saveResult);
+    const roleMaster = await RoleMaster.findOne({ where: { userId: saveResult.id } });
+    return userSerializer.new(saveResult, roleMaster);
   },
 
   updateUser: async (userParam) => {
@@ -38,7 +39,8 @@ module.exports = {
 
   findOneUser: async (id) => {
     const user = await User.findByPk(id);
-    return userSerializer.new(user);
+    const roleMaster = await RoleMaster.findOne({ where: { userId: user.id } });
+    return userSerializer.new(user, roleMaster);
   },
 
   findByConditionUser: async ({ user }) => {
@@ -49,6 +51,18 @@ module.exports = {
       email: { [Op.substring]: email ? email : "" },
     };
     const users = await User.findAll({where: condition});
-    return users.map(item => userSerializer.new(item));
+
+    const action = users.map(item => {
+      return RoleMaster.findOne({
+        where: { userId: item.id }
+      })
+    })
+    let result = await Promise.all(action);
+    
+    serviceResult = users.map((value, index) => {
+      return userSerializer.new(value, result[index]);
+    });
+
+    return serviceResult;
   }
 }
