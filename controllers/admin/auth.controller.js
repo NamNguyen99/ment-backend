@@ -7,7 +7,7 @@ const exceptionUtil = require('../../handler_error/exceptionUtil');
 const appSetting = require('../../appconfig/app.config');
 const db = require("../../database/models");
 const userSerializer = require('../../serializers/user.serializer');
-const User = db.User;
+const { User, RoleMaster } = db;
 
 const authController = {
   login: async (req, res) => {
@@ -24,14 +24,17 @@ const authController = {
           serviceResult.error = 'Authentication failed. Wrong password.';
           serviceResult.code = 401;
         } else {
+          const roleMaster = await RoleMaster.findOne({ where: { userId: user.id } });
           token = jwt.sign({
             email: user.email,
             name: user.fullName,
             id: user.id,
-            role: "admin"
+            role: roleMaster.name,
+            roleListId: roleMaster.roleCategoryIds
           }, appSetting.jwtConfig.secretKey, {
             expiresIn: appSetting.jwtConfig.expire
-          })
+          });
+          user.roleMaster = roleMaster;
           serviceResult.code = 200;
           serviceResult.success = true;
           serviceResult.token = token;
