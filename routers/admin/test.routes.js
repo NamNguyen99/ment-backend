@@ -1,6 +1,7 @@
 module.exports = app => {
   const tests = require("../../controllers/admin/test.controller.js");
   const authMiddleware = require('../../middlewares/auth.middleware');
+  const { testsMiddleware } = require('../../middlewares/role.middleware');
 
   var router = require("express").Router();
 
@@ -17,5 +18,5 @@ module.exports = app => {
   router.post("/start", tests.startTest);
   router.post("/clear", tests.clearTest);
 
-  app.use('/api/admin/tests', authMiddleware.authAdmin, router);
+  app.use('/api/admin/tests', [authMiddleware.authAdmin, testsMiddleware], router);
 };

@@ -34,7 +34,7 @@ const authMiddleware = {
     try {
       if (req.headers[appSetting.authKey]) {
         const token = req.headers[appSetting.authKey];
-        const decode = jwt.verify(token, appSetting.jwtConfig.secretKey)
+        const decode = jwt.verify(token, appSetting.jwtConfig.secretKey);
         if (!!decode) {
           next();
         } else {
