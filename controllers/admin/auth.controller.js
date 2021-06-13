@@ -34,11 +34,10 @@ const authController = {
           }, appSetting.jwtConfig.secretKey, {
             expiresIn: appSetting.jwtConfig.expire
           });
-          user.roleMaster = roleMaster;
           serviceResult.code = 200;
           serviceResult.success = true;
           serviceResult.token = token;
-          serviceResult.data = userSerializer.new(user);
+          serviceResult.data = userSerializer.new(user, roleMaster);
         }
       }
     } catch (error) {

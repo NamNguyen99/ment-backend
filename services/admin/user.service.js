@@ -8,22 +8,32 @@ module.exports = {
   createUser: async (userParam) => {
     let saveResult = false;
     if (userParam) {
-      const builder = User.build(userParam);
+      const builder = User.build(userParam.user);
       saveResult = await builder.save();
+      roleParams = userParam.roleMaster;
+      roleParams.userId = saveResult.id
+      roleParams.roleCategoryIds = JSON.stringify(roleParams.roleCategoryIds);
+      const roleBuilder = RoleMaster.build(roleParams);
+      roleMaster = await roleBuilder.save()
     }
-    const roleMaster = await RoleMaster.findOne({ where: { userId: saveResult.id } });
     return userSerializer.new(saveResult, roleMaster);
   },
 
   updateUser: async (userParam) => {
     let result = false;
-    if (userParam && userParam.id) {
-      const userModel = await User.findByPk(userParam.id);
+    if (userParam && userParam.user && userParam.user.id) {
+      const userModel = await User.findByPk(userParam.user.id);
+      const roleModel = await RoleMaster.findOne({ where: { userId: userModel.id } });
       if (userModel) {
-        result = await userModel.update(userParam);
+        result = await userModel.update(userParam.user);
+      }
+      if (roleModel) {
+        roleParams = userParam.roleMaster;
+        roleParams.roleCategoryIds = JSON.stringify(roleParams.roleCategoryIds);
+        roleMaster = await roleModel.update(roleParams)
       }
     }
-    return userSerializer.new(result);
+    return userSerializer.new(result, roleMaster);
   },
 
   deleteUser: async (id) => {
