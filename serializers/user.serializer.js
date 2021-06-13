@@ -14,6 +14,9 @@ const userSerializer = {
       unit:         user.unit,
       rank:         user.rank,
       position:     user.position,
+      gender:       user.gender,
+      militaryCode: user.militaryCode,
+      isBlock:      user.isBlock,
       roleMaster:   roleMaster ? roleMasterSerializer.new(roleMaster) : null
     })
   }
